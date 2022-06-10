@@ -3,6 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './scss/app.scss';
 import App from './App';
 
-const body = ReactDOM.createRoot(document.querySelector('body'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
 
-body.render(<App/>);
+root.render(<App/>);
