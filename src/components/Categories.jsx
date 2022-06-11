@@ -1,5 +1,4 @@
 import React from "react";
-import {logDOM} from "@testing-library/react";
 
 function Categories() {
   const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
@@ -13,7 +12,7 @@ function Categories() {
       <ul>
         {
           categories.map((value, i) =>
-            <li onClick={() => onClickCategory(i)} className={activeIndex === i ? "active" : ""}>
+            <li key={i} onClick={() => onClickCategory(i)} className={activeIndex === i ? "active" : ""}>
               {value}
             </li>
           )
