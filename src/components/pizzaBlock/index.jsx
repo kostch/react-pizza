@@ -7,8 +7,8 @@ const typeNames = ['тонкое', 'традиционное'];
 function PizzaBlock(props) {
   const {id, title, price, imageUrl, sizes, types} = props;
   const dispatch = useDispatch();
-  const cartItem = useSelector((state) => state.cart.items.find((obj) => obj.id === id));
-  const addedCount = cartItem ? cartItem.count : 0;
+  const cartItems = useSelector((state) => state.cart.items.filter((obj) => obj.id === id));
+  const addedCount = cartItems.reduce((prev, current) => prev + current.count, 0);
 
   const [activeType, setActiveType] = React.useState(0);
   const [activeSize, setActiveSize] = React.useState(0);
@@ -59,7 +59,7 @@ function PizzaBlock(props) {
             />
           </svg>
           <span>Добавить</span>
-          {addedCount > 0 && <i>{addedCount}</i>}
+          <i>{addedCount}</i>
         </button>
       </div>
     </div>

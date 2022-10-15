@@ -5,18 +5,14 @@ import {addItem, minusItem, removeItem} from "../redux/slices/cartSlice";
 const CartItem = ({id, title, type, size, price, count, imageUrl}) => {
   const dispatch = useDispatch();
   const onClickPlus = () => {
-    dispatch(
-      addItem({
-        id,
-      })
-    );
+    dispatch(addItem({id, type, size}));
   }
   const onClickMinus = () => {
-    count === 1 ? dispatch(removeItem(id)) : dispatch(minusItem(id));
+    count === 1 ? dispatch(removeItem({id, type, size})) : dispatch(minusItem({id, type, size}));
   }
   const onClickRemove = () => {
     if (window.confirm('ты действительно хочешь удалить товар?')) {
-      dispatch(removeItem(id))
+      dispatch(removeItem({id, type, size}))
     }
   }
 
