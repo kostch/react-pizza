@@ -21,7 +21,7 @@ export const Home = () => {
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj}/>);
-  const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index}/>);
+  const skeletons = [...new Array(4)].map((_, index) => <Skeleton key={index}/>);
 
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id))
