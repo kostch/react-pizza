@@ -1,6 +1,6 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {selectFilter, setCategoryId, setCurrentPage, setFilters, setSearchValue} from "../redux/slices/filterSlice";
+import {selectFilter, setCategoryId, setCurrentPage, setFilters} from "../redux/slices/filterSlice";
 import {fetchPizzas, selectPizzaData} from "../redux/slices/pizzaSlice";
 import Categories from "../components/Categories";
 import Sort, {list} from "../components/Sort";
