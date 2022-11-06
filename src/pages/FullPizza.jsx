@@ -1,16 +1,19 @@
 import React from "react";
 import axios from "axios";
-import {useParams} from "react-router-dom";
+import {useParams, useNavigate, Link} from "react-router-dom";
 import ContentLoader from "react-content-loader"
 import {useDispatch, useSelector} from "react-redux";
 import {addItem, selectCartItemById} from "../redux/slices/cartSlice";
+import "../scss/components/_alert.scss";
 
 const typeNames = ['тонкое', 'традиционное'];
 
 const FullPizza = () => {
   const dispatch = useDispatch();
   const [pizza, setPizza] = React.useState();
+  const [redirect, setRedirect] = React.useState(false);
   const {id} = useParams();
+  const navigate = useNavigate();
   const [activeType, setActiveType] = React.useState(0);
   const [activeSize, setActiveSize] = React.useState(0);
   const [{title, price, imageUrl, sizes, types}, setParams] = React.useState(0);
@@ -22,10 +25,12 @@ const FullPizza = () => {
       try {
         const {data} = await axios.get(`https://62a4b5af47e6e400639730b6.mockapi.io/items/${id}`);
         setPizza(data);
-        setParams(data)
+        setParams(data);
       } catch (error) {
-        console.log(error)
-        alert("Ошибка при получении пиццы :(")
+        setRedirect(true);
+        setTimeout(() => {
+          navigate("/");
+        }, 1500);
       }
     }
 
@@ -46,23 +51,38 @@ const FullPizza = () => {
 
   if (!pizza) {
     return (
-      <div className="container container--flex">
-        <ContentLoader
-          className="pizza-block"
-          speed={2}
-          width={280}
-          height={580}
-          viewBox="0 0 280 580"
-          backgroundColor="#f3f3f3"
-          foregroundColor="#ecebeb">
-          <circle cx="134" cy="136" r="125"/>
-          <rect x="0" y="279" rx="10" ry="10" width="280" height="23"/>
-          <rect x="0" y="321" rx="10" ry="10" width="280" height="48"/>
-          <rect x="0" y="381" rx="10" ry="10" width="280" height="88"/>
-          <rect x="0" y="501" rx="10" ry="10" width="95" height="30"/>
-          <rect x="125" y="492" rx="24" ry="24" width="152" height="45"/>
-        </ContentLoader>
-      </div>
+      <>
+        <div className="container container--flex">
+          <ContentLoader
+            className="pizza-block"
+            speed={2}
+            width={280}
+            height={580}
+            viewBox="0 0 280 580"
+            backgroundColor="#f3f3f3"
+            foregroundColor="#ecebeb">
+            <circle cx="134" cy="136" r="125"/>
+            <rect x="0" y="279" rx="10" ry="10" width="280" height="23"/>
+            <rect x="0" y="321" rx="10" ry="10" width="280" height="48"/>
+            <rect x="0" y="381" rx="10" ry="10" width="280" height="88"/>
+            <rect x="0" y="501" rx="10" ry="10" width="95" height="30"/>
+            <rect x="125" y="492" rx="24" ry="24" width="152" height="45"/>
+          </ContentLoader>
+        </div>
+        {redirect && (
+          <div className="pop-up_wrapper">
+            <div className="pop-up">
+              <p className="pop-up_title">
+                Произошла ошибка при загрузке информации о пицце :(
+              </p>
+              <div className="pop-up_text">
+                Вы будете перенаправлены на главную страницу. Если этого не произошло автоматически
+                <Link to="/" className="pop-up_link">нажмите здесь.</Link>
+              </div>
+            </div>
+          </div>
+        )}
+      </>
     )
   }
 

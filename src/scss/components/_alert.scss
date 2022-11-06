@@ -1,0 +1,44 @@
+@import '../variables';
+
+.pop-up {
+  max-width: 600px;
+  width: 100%;
+  padding: 20px;
+  margin: 15px;
+  background: $gray-line;
+  border-radius: 5px;
+  -webkit-box-shadow: 4px 4px 25px 9px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 4px 25px 9px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 4px 25px 9px rgba(34, 60, 80, 0.2);
+
+  &_wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(47%, 47%, 47%, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &_title {
+    text-align: center;
+    font-weight: 700;
+    font-size: 21px;
+    line-height: 25px;
+    padding-bottom: 15px;
+  }
+  &_link {
+    cursor: pointer;
+    color: #0556b0;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+
