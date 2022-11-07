@@ -8,17 +8,33 @@ import "../scss/components/_alert.scss";
 
 const typeNames = ['тонкое', 'традиционное'];
 
-const FullPizza = () => {
+const FullPizza: React.FC = () => {
   const dispatch = useDispatch();
-  const [pizza, setPizza] = React.useState();
-  const [redirect, setRedirect] = React.useState(false);
+  const [pizza, setPizza] = React.useState<{
+    imageUrl: string,
+    title: string,
+    price: number,
+  }>();
+  const [redirect, setRedirect] = React.useState<boolean>(false);
   const {id} = useParams();
   const navigate = useNavigate();
-  const [activeType, setActiveType] = React.useState(0);
-  const [activeSize, setActiveSize] = React.useState(0);
-  const [{title, price, imageUrl, sizes, types}, setParams] = React.useState(0);
+  const [activeType, setActiveType] = React.useState<number>(0);
+  const [activeSize, setActiveSize] = React.useState<number>(0);
+  const [{title, price, imageUrl, sizes, types}, setParams] = React.useState<{
+    title: string,
+    price: number,
+    imageUrl: string,
+    sizes: Array<number>,
+    types: Array<number>,
+  }>({
+    title: "",
+    price: 0,
+    imageUrl: "",
+    sizes: [],
+    types: [],
+  });
   const cartItems = useSelector(selectCartItemById(id));
-  const addedCount = cartItems.reduce((prev, current) => prev + current.count, 0);
+  const addedCount = cartItems.reduce((prev:number, current:any) => prev + current.count, 0);
 
   React.useEffect(() => {
     async function fetchPizza() {
