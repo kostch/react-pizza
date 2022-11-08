@@ -20,9 +20,9 @@ export const Home: React.FC = () => {
   const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj}/>);
   const skeletons = [...new Array(4)].map((_, index) => <Skeleton key={index}/>);
 
-  const onChangeCategory = (idx: number) => {
+  const onChangeCategory = React.useCallback((idx: number) => {
     dispatch(setCategoryId(idx))
-  };
+  }, []);
 
   const onChangePage = (page: number) => {
     dispatch(setCurrentPage(page));
@@ -80,7 +80,7 @@ export const Home: React.FC = () => {
     <>
       <div className="content__top">
         <Categories categoryId={categoryId} onChangeCategory={onChangeCategory}/>
-        <Sort/>
+        <Sort sort={sort} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {
