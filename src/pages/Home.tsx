@@ -1,7 +1,7 @@
 import React from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {selectFilter, setCategoryId, setCurrentPage, setFilters} from "../redux/slices/filterSlice";
-import {fetchPizzas, selectPizzaData} from "../redux/slices/pizzaSlice";
+import {fetchPizzas, SearchPizzaParamsType, selectPizzaData} from "../redux/slices/pizzaSlice";
 import Categories from "../components/Categories";
 import Sort, {list} from "../components/Sort";
 import Skeleton from "../components/pizzaBlock/Skeleton";
@@ -9,22 +9,23 @@ import PizzaBlock from "../components/pizzaBlock";
 import Pagination from "../components/Pagination";
 import qs from "qs";
 import {useNavigate} from "react-router";
+import {useAppDispatch} from "../redux/store";
 
-export const Home = () => {
+export const Home: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const isMounted = React.useRef(false);
+  const dispatch = useAppDispatch();
+  const isMounted = React.useRef<boolean>(false);
   const {categoryId, sort, currentPage, searchValue} = useSelector(selectFilter);
   const {items, status} = useSelector(selectPizzaData);
-  const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj}/>);
+  const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj}/>);
   const skeletons = [...new Array(4)].map((_, index) => <Skeleton key={index}/>);
 
-  const onChangeCategory = (id) => {
-    dispatch(setCategoryId(id))
+  const onChangeCategory = (idx: number) => {
+    dispatch(setCategoryId(idx))
   };
 
-  const onChangePage = (number) => {
-    dispatch(setCurrentPage(number));
+  const onChangePage = (page: number) => {
+    dispatch(setCurrentPage(page));
   }
 
   const getPizzas = async () => {
@@ -38,7 +39,7 @@ export const Home = () => {
       sortBy,
       category,
       search,
-      currentPage
+      currentPage: String(currentPage),
     }))
   };
 
@@ -58,15 +59,14 @@ export const Home = () => {
   // Если был первый рендер, то проверяем URL-параметр и сохраняем в redux
   React.useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
-
-      const sort = list.find(obj => obj.sortProperty === params.sortProperty);
-      dispatch(
-        setFilters({
-          ...params,
-          sort
-        })
-      );
+      const params = qs.parse(window.location.search.substring(1)) as SearchPizzaParamsType;
+      const sort = list.find(obj => obj.sortProperty === params.sortBy);
+      dispatch(setFilters({
+        searchValue: params.search,
+        categoryId: Number(params.categoryId),
+        currentPage: Number(params.currentPage),
+        sort: sort || list[0],
+      }));
     }
   }, []);
 

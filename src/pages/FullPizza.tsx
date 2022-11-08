@@ -3,7 +3,7 @@ import axios from "axios";
 import {useParams, useNavigate, Link} from "react-router-dom";
 import ContentLoader from "react-content-loader"
 import {useDispatch, useSelector} from "react-redux";
-import {addItem, selectCartItemById} from "../redux/slices/cartSlice";
+import {addItem, CartItemType, selectCartItemById} from "../redux/slices/cartSlice";
 import "../scss/components/_alert.scss";
 
 const typeNames = ['тонкое', 'традиционное'];
@@ -33,7 +33,7 @@ const FullPizza: React.FC = () => {
     sizes: [],
     types: [],
   });
-  const cartItems = useSelector(selectCartItemById(id));
+  const cartItems = useSelector(selectCartItemById(id as string));
   const addedCount = cartItems.reduce((prev:number, current:any) => prev + current.count, 0);
 
   React.useEffect(() => {
@@ -61,7 +61,7 @@ const FullPizza: React.FC = () => {
       imageUrl,
       type: typeNames[activeType],
       size: sizes[activeSize]
-    };
+    } as CartItemType;
     dispatch(addItem(item));
   }
 

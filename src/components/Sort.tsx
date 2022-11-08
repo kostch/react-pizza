@@ -1,30 +1,38 @@
 import React from "react";
 import {useSelector, useDispatch} from "react-redux";
-import {selectSort, setSort} from '../redux/slices/filterSlice';
+import {selectSort, setSort, SortPropertyEnum} from '../redux/slices/filterSlice';
 
-export const list = [
-  {name: "популярности (+)", sortProperty: "rating"},
-  {name: "популярности (-)", sortProperty: "-rating"},
-  {name: "цене  (+)", sortProperty: "price"},
-  {name: "цене (-)", sortProperty: "-price"},
-  {name: "алфавиту  (+)", sortProperty: "title"},
-  {name: "алфавиту (-)", sortProperty: "-title"},
+type ListType = {
+  name: string,
+  sortProperty: SortPropertyEnum,
+}
+
+export const list: ListType[] = [
+  {name: "популярности (+)", sortProperty: SortPropertyEnum.RATING_DESC},
+  {name: "популярности (-)", sortProperty: SortPropertyEnum.RATING_ASC},
+  {name: "цене  (+)", sortProperty: SortPropertyEnum.PRICE_DESC},
+  {name: "цене (-)", sortProperty: SortPropertyEnum.PRICE_ASC},
+  {name: "алфавиту  (+)", sortProperty: SortPropertyEnum.TITLE_DESC},
+  {name: "алфавиту (-)", sortProperty: SortPropertyEnum.TITLE_ASC},
 ];
 
 function Sort() {
   const dispatch = useDispatch();
-  const sortRef = React.useRef()
+  const sortRef = React.useRef<HTMLDivElement>(null)
   const sort = useSelector(selectSort)
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState<boolean>(false);
 
-  const onclickListItem = (obj) => {
+  const onclickListItem = (obj: ListType) => {
     dispatch(setSort(obj));
     setOpen(false);
   }
 
   React.useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (!event.path.includes(sortRef.current)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      const _event = event as MouseEvent & {
+        path: Node[]
+      };
+      if (sortRef.current && !_event.path.includes(sortRef.current)) {
         setOpen(false);
       }
     }
