@@ -5,7 +5,7 @@ import NotFound from "./pages/NotFound";
 import Loading from "./components/Loading";
 import FullPizza from "./pages/FullPizza";
 import React, {Suspense} from "react";
-const Cart = React.lazy(() => import("./pages/Cart"));
+const Cart = React.lazy(() => import(/* webpackChunkName: "Cart"*/ "./pages/Cart"));
 
 function App() {
   return (
