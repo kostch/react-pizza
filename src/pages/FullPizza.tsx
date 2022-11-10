@@ -141,6 +141,7 @@ const FullPizza: React.FC = () => {
           <i>{addedCount}</i>
         </button>
       </div>
+      <Link to={"/"} className="button" style={{marginTop: "30px"}}>Назад</Link>
     </div>
   )
 }
