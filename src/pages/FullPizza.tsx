@@ -3,8 +3,9 @@ import axios from "axios";
 import {useParams, useNavigate, Link} from "react-router-dom";
 import ContentLoader from "react-content-loader"
 import {useDispatch, useSelector} from "react-redux";
-import {addItem, CartItemType, selectCartItemById} from "../redux/slices/cartSlice";
+import {addItem, selectCartItemById} from "../redux/slices/cart/slice";
 import "../scss/components/_alert.scss";
+import {CartItemType} from "../redux/slices/cart/types";
 
 const typeNames = ['тонкое', 'традиционное'];
 

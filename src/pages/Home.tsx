@@ -1,7 +1,8 @@
 import React from "react";
 import {useSelector} from "react-redux";
-import {selectFilter, setCategoryId, setCurrentPage, setFilters} from "../redux/slices/filterSlice";
-import {fetchPizzas, SearchPizzaParamsType, selectPizzaData} from "../redux/slices/pizzaSlice";
+import {selectFilter, setCategoryId, setCurrentPage, setFilters} from "../redux/slices/filter/slice";
+import {fetchPizzas, selectPizzaData} from "../redux/slices/pizza/slice";
+import {SearchPizzaParamsType} from "../redux/slices/pizza/types";
 import Categories from "../components/Categories";
 import Sort, {list} from "../components/Sort";
 import Skeleton from "../components/pizzaBlock/Skeleton";
