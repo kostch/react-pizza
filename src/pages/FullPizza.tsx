@@ -35,7 +35,7 @@ const FullPizza: React.FC = () => {
     types: [],
   });
   const cartItems = useSelector(selectCartItemById(id as string));
-  const addedCount = cartItems.reduce((prev:number, current:any) => prev + current.count, 0);
+  const addedCount = cartItems.reduce((prev:number, current) => prev + current.count, 0);
 
   React.useEffect(() => {
     async function fetchPizza() {
