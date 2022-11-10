@@ -1,3 +1,5 @@
+![image](https://user-images.githubusercontent.com/74373321/201108306-84310c0f-8d1c-452f-82a6-07bccae13367.png)
+
 # Технологии:
 - **ReactJS 18**
 - **TypeScript**
